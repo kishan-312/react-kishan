@@ -1,0 +1,179 @@
+.categoryContainer {
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* background-color: red; */
+
+}
+
+.category-heading {
+
+    display: flex;
+    gap: 20px;
+    color: red;
+    align-items: center;
+
+}
+
+.category-heading > p:nth-child(2) {
+
+    font-weight: 500;
+    letter-spacing: 1px;
+
+}
+
+.container .category-style {
+
+    width: 20px !important;
+    height: 40px !important;
+    background-color: red;
+    border-radius: 4px;
+
+}
+
+
+.arrow-heading {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.arrows {
+
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+.arrows .round {
+
+    background-color: aliceblue;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    padding: 7px;
+
+}
+
+.arrows .round .arr {
+
+    transition: all 0.4s ease;
+
+}
+
+.arrows .round .arr:active {
+
+    scale: 1.1;
+
+}
+
+.categoryCardContainer {
+
+    display: flex;
+    overflow: hidden;
+    gap: 20px;
+    scroll-behavior: smooth;
+
+}
+
+.categoryCard {
+
+    flex: 0 0 calc(100% / 3 - 20px);
+    position: relative;
+    border-radius: 4px;
+    transition: all 0.4s ease-in-out;
+
+}
+
+.categoryCard img {
+
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    filter: blur(1px);
+
+}
+
+.categoryCard span {
+
+    position: absolute;
+    color: azure;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50% ;
+    z-index: 99;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 4px;
+
+}
+
+@media(max-width : 576px) {
+
+    .categoryCard {
+
+    flex: 0 0 calc(100%  - 20px);
+
+}
+
+
+
+
+}
+
+@media(min-width : 576px) {
+
+    .categoryCard {
+
+    flex: 0 0 calc(100% / 2  - 20px);
+
+    }
+
+}
+
+
+@media(min-width : 768px) {
+
+    
+
+     .categoryCard {
+
+     flex: 0 0 calc(100% / 3  - 20px);
+
+    }
+
+}
+
+
+@media(min-width : 992px) {
+
+        
+   
+
+
+}
+
+
+@media(min-width : 1200px) {
+
+
+
+}
+
+
+@media(min-width : 1400px) {
+
+
+
+}
+
+
+
+
+
+

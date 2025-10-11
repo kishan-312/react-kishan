@@ -1,0 +1,40 @@
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  let indexOfLastRow = currentPage * rowsPerPage;
+  let indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  let currentRows = sortDatas.slice(indexOfFirstRow, indexOfLastRow);
+  const totalPages = Math.ceil(sortDatas.length / rowsPerPage);
+  console.log(totalPages);
+
+  
+        <div className="pagination m-4 d-flex gap-4 justify-content-center">
+          <button
+            className=" btn btn-success "
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+          >
+            <GrPrevious />
+          </button>
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              className={` btn ${
+                currentPage === i + 1
+                  ? "btn-white border border-1"
+                  : "btn-danger"
+              }`}
+              onClick={() => setCurrentPage(i + 1)}
+              key={i}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            className="btn btn-success"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+          >
+            <GrNext />
+          </button>
+        </div>
+

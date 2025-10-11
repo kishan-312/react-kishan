@@ -1,0 +1,6 @@
+1.. node_modules = packages manage kare (install karela packages)
+projects ma extra features joye to need pacakges/library/dependencies
+2.. public = store images/icons/favicon etc
+3.. assets = static files 
+3. package.json = store dependencies
+vite.config = add plugins

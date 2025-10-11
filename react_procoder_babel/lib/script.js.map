@@ -1,0 +1,24 @@
+{
+  "version": 3,
+  "file": "script.js",
+  "names": [
+    "hello",
+    "h2",
+    "React",
+    "createElement",
+    "root",
+    "ReactDOM",
+    "createRoot",
+    "document",
+    "querySelector",
+    "render"
+  ],
+  "sources": [
+    "../script.js"
+  ],
+  "sourcesContent": [
+    "\r\nconst hello = \"hi kishan\"\r\nconst h2 = <h2> hello {hello} </h2>\r\n\r\n\r\n\r\nconst root = ReactDOM.createRoot(document.querySelector(\"#root\"));\r\n\r\nroot.render(h2)\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n"
+  ],
+  "mappings": "AACA,MAAMA,KAAK,GAAG,WAAW;AACzB,MAAMC,EAAE,gBAAGC,KAAA,CAAAC,aAAA,aAAI,SAAO,EAACH,KAAK,EAAC,GAAK,CAAC;AAInC,MAAMI,IAAI,GAAGC,QAAQ,CAACC,UAAU,CAACC,QAAQ,CAACC,aAAa,CAAC,OAAO,CAAC,CAAC;AAEjEJ,IAAI,CAACK,MAAM,CAACR,EAAE,CAAC",
+  "ignoreList": []
+}

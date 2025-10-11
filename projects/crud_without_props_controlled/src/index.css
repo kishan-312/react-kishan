@@ -1,0 +1,10 @@
+.focus-scale:where(:focus,:active) {
+  transform: scale(1.1) !important;
+}
+
+.focus-scale {
+
+  transition: transform 0.2s ease !important;
+    cursor: pointer;
+
+}

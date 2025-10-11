@@ -1,0 +1,27 @@
+* {
+
+    margin: 0 !important ;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+
+}
+
+.container.light {
+
+    background-color:  #ffffff !important;
+    color:  #000000 !important;
+
+}
+
+.container.dark {
+
+    background-color: #000000   !important;
+    color:  #ffffff !important;
+
+}
+
+
+
+
+
+

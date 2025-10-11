@@ -1,0 +1,332 @@
+.main.home {
+
+    margin-top: 90px;
+
+}
+
+.products {
+
+
+    /* background-color: aquamarine; */
+    width: 100%;
+    padding: 40px 0;
+    /* background-color: bisque; */
+
+}
+
+.products .salesTimerContainer {
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* background-color: red; */
+
+
+
+}
+
+.products-heading {
+
+    display: flex;
+    gap: 20px;
+    color: red;
+    align-items: center;
+
+}
+
+.products-heading > p:nth-child(2) {
+
+    font-weight: 500;
+    letter-spacing: 1px;
+
+}
+
+.container .product-style {
+
+    width: 20px !important;
+    height: 40px !important;
+    background-color: red;
+    border-radius: 4px;
+
+}
+
+
+.salesContainer {
+    display: flex;
+
+}
+
+
+.salesContainer .timerContaner {
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+}
+
+
+.timerContaner > span {
+
+    color: red;
+    font-size: 30px;
+
+}
+
+.timer span {
+
+    font-weight: 600;
+
+}
+.timer p {
+
+    font-weight: 600;
+    font-size: 35px;
+    letter-spacing: 2px;
+
+}
+
+.productsData {
+
+    display: grid;
+    gap: 20px;
+
+}
+
+.cardContainer {
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+/* .productsData .card {
+
+
+
+} */
+
+
+.productsData .card figure {
+
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 6px;
+    background-color: whitesmoke;
+    padding: 40px 30px;
+    position: relative;
+    transition: all 0.4s ease;
+
+
+}
+
+figure .addToCart {
+
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    background-color: black;
+    width: 100%;
+    color: white;
+    text-align: center;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    padding: 10px;
+    transition: all 0.4s ease;
+    
+
+}
+
+figure:hover .addToCart {
+
+    bottom: 0;
+
+}
+
+figure img {
+
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover; */
+    display: block;
+
+}
+
+.productDescription {
+
+    display: grid;
+    gap: 10px;
+    margin-top: 10px;
+
+}
+
+.productDescription h5  {
+
+    line-height: 1.4;
+
+}
+
+.productDescription div {
+
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+}
+
+.productDescription .productPrice {
+
+    color: red;
+
+}
+
+.productDescription .productPrice2 {
+
+    color: gray;
+    text-decoration: line-through;
+
+}
+
+.showDataButton {
+
+    display: block;
+    margin: 20px auto;
+    background-color: blue;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    font-size: 20px;
+    border-radius: 6px;
+
+}
+
+footer {
+
+    width: 100%;
+    height: 90px;
+    background-color: black;
+    color: white;
+    margin-top: 50px;
+
+}
+
+.footer  {
+
+    display: grid;
+    place-content: center;
+    width: 100%;
+    height: 100%;
+
+}
+
+@media(max-width : 576px) {
+   .salesContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+
+   }
+
+   .productsData {
+
+    grid-template-columns: repeat(2,1fr);
+
+}
+
+
+.salesContainer .timerContaner {
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.timerContaner > span {
+
+    color: red;
+    font-size: 20px;
+
+}
+
+.timer span {
+
+    font-weight: 600;
+
+}
+.timer p {
+
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 2px;
+
+}
+
+
+}
+
+@media(min-width : 576px) {
+
+    .salesContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+   }
+
+    .productsData {
+
+    grid-template-columns: repeat(2,1fr);
+
+}
+
+}
+
+
+@media(min-width : 768px) {
+
+.salesContainer {
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+
+}
+
+    .productsData {
+
+    grid-template-columns: repeat(3,1fr);
+
+}
+
+
+}
+
+
+@media(min-width : 992px) {
+
+        .productsData {
+
+    grid-template-columns: repeat(4,1fr);
+
+}
+
+}
+
+
+@media(min-width : 1200px) {
+
+
+
+}
+
+
+@media(min-width : 1400px) {
+
+
+
+}
+
+
+
+
+

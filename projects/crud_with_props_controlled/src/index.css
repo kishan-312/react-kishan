@@ -1,0 +1,36 @@
+.arrow {
+
+    transition: all 0.4s ease;
+    cursor: pointer;
+
+}
+
+.arrow:active {
+
+    scale: 1.1;
+    
+
+}
+
+.theme-icon {
+
+    cursor: pointer;
+
+}
+
+
+.container.light {
+
+    background-color: aliceblue;
+    color: black;
+
+}
+
+.container.dark {
+
+    background-color: black;
+    color: aliceblue;
+
+}
+
+

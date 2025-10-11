@@ -1,0 +1,237 @@
+import { useEffect, useReducer } from "react";
+import { FormContext } from "../contexts/FormContext";
+
+const initialInputs = {
+  name: "",
+  email: "",
+  password: "",
+  gender: "",
+  hobbies: [],
+  country: "",
+  date: "",
+  experience: 0,
+};
+
+const initialFilter = {
+  search: "",
+  countryFilter: "all",
+  experience2: 0,
+  hobbies2: [],
+};
+
+const initialState = {
+  inputs: initialInputs,
+  filterHandler: initialFilter,
+  datas: JSON.parse(localStorage.getItem("datas")) || [],
+  errors: {},
+  editId: null,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "SET_INPUTS":
+      return { ...state, inputs: action.payload };
+
+    case "SET_ERRORS":
+      return { ...state, errors: action.payload };
+
+    case "ADD_DATA":
+      return {
+        ...state,
+        datas: [...state.datas, { id: crypto.randomUUID(), ...state.inputs }],
+      };
+
+    case "EDIT_DATA":
+      return {
+        ...state,
+        datas: state.datas.map((d) =>
+          d.id === state.editId ? { ...state.inputs, id: state.editId } : d
+        ),
+        editId: null,
+      };
+
+    case "DELETE_DATA":
+      return {
+        ...state,
+        datas: state.datas.filter((d) => d.id !== action.payload),
+        editId: null,
+      };
+
+    case "SET_EDIT":
+      return {
+        ...state,
+        editId: action.payload.id,
+        inputs: action.payload.data,
+        errors: {},
+      };
+
+    case "RESET_FORM":
+      return { ...state, inputs: initialInputs, errors: {}, editId: null };
+
+    case "CLEAR_ALL":
+      return { ...state, datas: [], inputs: initialInputs, errors: {}, editId: null };
+
+    case "SET_FILTER":
+      return {
+        ...state,
+        filterHandler: { ...state.filterHandler, ...action.payload },
+      };
+
+    default:
+      return state;
+  }
+}
+
+function FormContextProvider(props) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    localStorage.setItem("datas", JSON.stringify(state.datas));
+  }, [state.datas]);
+
+  // ---- Helpers ----
+  function validateForm(userObj = state.inputs) {
+    const { name, email, password, gender, hobbies, country, date } = userObj;
+    const errors = {};
+
+    if (name.trim() === "") errors["name"] = "name is required";
+    if (email.trim() === "") {
+      errors["email"] = "email is required";
+    } else if (
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+    ) {
+      errors["email"] = "email is invalid";
+    }
+    if (password.trim() === "") {
+      errors["password"] = "password is required";
+    } else if (password.length < 6) {
+      errors["password"] = "password must be at least 6 characters";
+    }
+    if (!gender) errors["gender"] = "gender is required";
+    if (hobbies.length === 0) errors["hobbies"] = "At least one hobby select";
+    if (country === "") errors["country"] = "Select At least one country";
+    if (!date) errors["date"] = "date is required";
+
+    return errors;
+  }
+
+  // ---- Handlers ----
+  function handleChange(e) {
+    const { name, value, checked, type } = e.target;
+    let newInputs = { ...state.inputs };
+
+    if (type === "checkbox" && name === "hobbies") {
+      let updateHobbies = [...state.inputs.hobbies];
+      if (checked) {
+        updateHobbies.push(value);
+      } else {
+        updateHobbies = updateHobbies.filter((h) => h !== value);
+      }
+      newInputs = { ...newInputs, hobbies: updateHobbies };
+    } else if (type === "range") {
+      newInputs = { ...newInputs, [name]: Number(value) };
+    } else {
+      newInputs = { ...newInputs, [name]: value };
+    }
+
+    dispatch({ type: "SET_INPUTS", payload: newInputs });
+    dispatch({ type: "SET_ERRORS", payload: validateForm(newInputs) });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const validateErrors = validateForm();
+    if (Object.keys(validateErrors).length > 0) {
+      dispatch({ type: "SET_ERRORS", payload: validateErrors });
+      return;
+    }
+
+    if (state.editId) {
+      dispatch({ type: "EDIT_DATA" });
+    } else {
+      dispatch({ type: "ADD_DATA" });
+    }
+
+    dispatch({ type: "RESET_FORM" });
+  }
+
+  function handleDelete(id) {
+    const confirmDelete = confirm("Are you sure you want to delete ?");
+    if (confirmDelete) {
+      dispatch({ type: "DELETE_DATA", payload: id });
+    }
+  }
+
+  function handleEdit(id, data) {
+    dispatch({ type: "SET_EDIT", payload: { id, data } });
+  }
+
+  function handleClear() {
+    dispatch({ type: "CLEAR_ALL" });
+  }
+
+  function handleClearEdit() {
+    dispatch({ type: "RESET_FORM" });
+  }
+
+  function handleChangeFilter(e) {
+    const { value, name, checked, type } = e.target;
+
+    if (type === "range" && name === "experience2") {
+      dispatch({ type: "SET_FILTER", payload: { [name]: Number(value) } });
+    } else if (type === "checkbox" && name === "hobbies2") {
+      let updateHobbies = [...state.filterHandler.hobbies2];
+      if (checked) {
+        updateHobbies.push(value);
+      } else {
+        updateHobbies = updateHobbies.filter((d) => d !== value);
+      }
+      dispatch({ type: "SET_FILTER", payload: { hobbies2: updateHobbies } });
+    } else {
+      dispatch({ type: "SET_FILTER", payload: { [name]: value } });
+    }
+  }
+
+  // ---- Filtering ----
+  const filterDatas = state.datas.filter((data) => {
+    const searchFilter = data.name
+      .toLowerCase()
+      .includes(state.filterHandler.search.toLowerCase());
+
+    const countryFilter =
+      state.filterHandler.countryFilter === "all" ||
+      data.country === state.filterHandler.countryFilter;
+
+    const rangeFilter =
+      state.filterHandler.experience2 === 0 ||
+      data.experience >= state.filterHandler.experience2;
+
+    const checkboxFilter =
+      state.filterHandler.hobbies2.length === 0 ||
+      state.filterHandler.hobbies2.every((hobby) => data.hobbies.includes(hobby));
+
+    return searchFilter && countryFilter && rangeFilter && checkboxFilter;
+  });
+
+  return (
+    <FormContext.Provider
+      value={{
+        ...state,
+        handleChange,
+        handleSubmit,
+        handleDelete,
+        handleEdit,
+        handleClear,
+        handleClearEdit,
+        handleChangeFilter,
+        filterDatas,
+        dispatch, // exposing dispatch if needed
+      }}
+    >
+      {props.children}
+    </FormContext.Provider>
+  );
+}
+
+export default FormContextProvider;

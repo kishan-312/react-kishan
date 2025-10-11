@@ -1,0 +1,70 @@
+       <div className=" form-check d-flex flex-column gap-1 p-0">
+              <label htmlFor="" className="form-check-label">
+                Gender :
+              </label>
+              <div className=" d-flex gap-3">
+                {["male", "female", "other"].map((ele) => (
+                  <div className=" form-check">
+                    <input
+                      type="radio"
+                      name="gender"
+                      id={ele}
+                      className="form-check-input"
+                      value={ele}
+                      onChange={""}
+                    />
+                    <label htmlFor={ele} className="form-check-label">
+                      {ele.charAt(0).toUpperCase() + ele.slice(1)}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+///
+
+import { useContext } from "react";
+import { FormContext } from "../contexts/FormContext";
+
+const Table = ({ options = [] }) => {
+  const { datas } = useContext(FormContext);
+
+  return (
+    <>
+      <table className=" table table-bordered mb-4 mt-2 text-center w-75 mx-auto ">
+        <thead>
+          <tr>
+            {options?.map((ele) => (
+              <th key={ele}>{ele.charAt(0).toUpperCase() + ele.slice(1)}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {datas.length === 0 ? (
+            <tr>
+              <td colSpan={options.length} className=" text-danger fs-1">
+                {" "}
+                No data Available{" "}
+              </td>
+            </tr>
+          ) : (
+            datas?.map((data, index) => (
+              <tr key={data?.id || index}>
+                <td>{index + 1}</td>
+              </tr>
+              //   <tr key={data?.id || index}>
+              //     <td>{index + 1}</td>
+              //     {options?.map((ele) => (
+              //       <td key={ele}>{data[ele]}</td>
+              //     ))}
+              //   </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </>
+  );
+};
+
+export default Table;
+
