@@ -2,22 +2,22 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 
-    show : false
+    show: false
 
 }
 
 const tooltipSlice = createSlice({
 
-    name : "tooltip",
+    name: "tooltip",
     initialState,
-    reducers : {
+    reducers: {
 
-        showTooltip : (state) => {
+        showTooltip: (state) => {
 
             state.show = true
 
         },
-        hideTooltip : (state) => {
+        hideTooltip: (state) => {
 
             state.show = false
 
@@ -28,5 +28,5 @@ const tooltipSlice = createSlice({
 })
 
 
-export default tooltipSlice.reducer ;
+export default tooltipSlice.reducer;
 export const { showTooltip, hideTooltip } = tooltipSlice.actions

@@ -15,12 +15,12 @@ const App = () => {
       {/* <Accordion /> */}
       {/* <Tabs /> */}
       {/* <Modal /> */}
-      {/* <Tooltip /> */}
-      {/* <Dropdown /> */}
+      {/* 1 <Tooltip /> */}
+      {/*2 <Dropdown /> */}
       {/* <Sidebar /> */}
       {/* <LoadData /> */}
-      {/* <Slider /> */}
-      <Timer />
+      <Slider />
+      {/* <Timer /> */}
     </>
   );
 };

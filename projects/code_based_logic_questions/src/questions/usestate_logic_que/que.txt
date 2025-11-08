@@ -1,0 +1,212 @@
+//// same value,ref = then no re-render , batch of update , setstate always async 
+
+Got it — I’ll give the remaining 24 questions (7 to 30) fast, clear, short, and to-the-point
+Same Category: State Update & Re-render Logic
+
+Question 7
+setCount(count + 1);
+console.log(count);
+
+Answer
+
+console.log(count) prints old value.
+State updates do not apply immediately in that function.
+
+Question 8
+setCount(prev => prev + 1);
+console.log(count);
+
+Answer
+
+Still logs old value.
+prev => prev + 1 ensures correct next state, but console does not see updated state.
+
+Question 9
+
+Why is state asynchronous?
+
+Answer
+
+To batch updates for performance.
+React delays updates to avoid unnecessary re-renders.
+
+Question 10
+
+What happens if you mutate state directly?
+
+Answer
+
+UI does not update because React compares references, not values.
+
+Question 11
+const [obj, setObj] = useState({a:1});
+obj.a = 2;
+setObj(obj);
+
+Answer
+
+UI does NOT re-render because reference is same.
+
+Question 12
+
+Correct way to update object state?
+
+setObj(prev => ({ ...prev, a: 2 }));
+
+Question 13
+setCount(count++);
+
+Answer
+
+❌ Wrong — count++ returns old value.
+So UI may not update.
+Use:
+
+setCount(prev => prev + 1);
+
+Question 14
+for (let i = 0; i < 3; i++) setCount(prev => prev + 1);
+
+Final Count Change
+
++3
+
+Question 15
+
+Does calling setState twice guarantee two re-renders?
+
+Answer
+
+No. React batches state updates → usually becomes 1 re-render.
+
+Question 16
+
+State update runs — does component always re-render?
+
+Answer
+
+Yes, unless new state === old state (same reference/value).
+
+Question 17
+setCount(5);
+setCount(5);
+
+Answer
+
+No re-render — same value.
+
+Question 18
+setArr(arr.push(5));
+
+
+UI updates?
+
+Answer
+
+No. push mutates array. Must do:
+
+setArr(prev => [...prev, 5]);
+
+Question 19
+
+Why use functional updates?
+
+Answer
+
+To avoid stale values when next state depends on previous.
+
+Question 20
+setState(prev => prev);
+
+Answer
+
+No re-render — state unchanged.
+
+Question 21
+
+Can state updates be synchronous in React?
+
+Answer
+
+In rare cases (e.g., outside events in React 17), but React 18 batches by default.
+
+Question 22
+
+Does useState batch updates inside setTimeout?
+
+Answer
+
+Yes, in React 18. In React <18, No.
+
+Question 23
+console.log(state);
+setState(newValue);
+console.log(state);
+
+Answer
+
+Both logs print old state.
+
+Question 24
+setCount(prev => prev + 1);
+setCount(prev => prev + 1);
+
+Answer
+
+Count increases by +2.
+
+Question 25
+
+What happens if you store non-primitive state (object/array) and modify it directly?
+
+Answer
+
+UI does not re-render because reference is same.
+
+Question 26
+
+Best practice for updating nested state?
+
+Answer
+
+Use spread or structured copy:
+
+setUser(prev => ({
+  ...prev,
+  address: { ...prev.address, city: "Surat" }
+}));
+
+Question 27
+
+Why should state updates be immutable?
+
+Answer
+
+So React can detect changes via reference comparison.
+
+Question 28
+
+Can setState be called inside a loop?
+
+Answer
+
+Yes — but use functional updater to avoid stale state.
+
+Question 29
+setState(prev => prev);
+
+
+Will the component re-render?
+
+Answer
+
+No — state unchanged.
+
+Question 30
+
+Summary rule?
+
+Answer
+
+If new state depends on old state → always use functional updater.
+Never mutate state. Always create new copies.

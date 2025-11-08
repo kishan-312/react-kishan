@@ -1,0 +1,88 @@
+Category 1 — State Update & Re-render Logic
+
+Question 1
+
+import React, { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+    setCount(count + 1);
+    console.log("inside handler:", count);
+  }
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={handleClick}>Increment Twice</button>
+    </div>
+  );
+}
+
+
+What will be logged to the console when the button is clicked once? What will the displayed Count: be after the click? Explain why.
+
+Short answer (interviewer-friendly)
+
+Console logs: inside handler: 0
+
+Displayed Count in UI after the click: 1 (not 2)
+
+Full explanation
+Key idea: React state updates may be batched and setState is asynchronous from the perspective of the current function.
+
+In this code, count is the value captured by the handleClick closure at the time the function runs. That value is 0 before any updates.
+
+The two calls setCount(count + 1) both compute count + 1 using the same captured count value (0), so each call requests the new state 1.
+
+React batches multiple state updates in event handlers for performance. The two updates request the same value 1, so the final state becomes 1.
+
+console.log("inside handler:", count) prints the current captured value 0. setCount doesn't synchronously update count within the same function call.
+
+Why it’s not 2
+
+To increment based on the latest state (and not the stale captured value), use the functional updater form:
+
+setCount(prev => prev + 1);
+setCount(prev => prev + 1);
+
+
+With that, React applies the functions sequentially so the final count becomes 2.
+
+Examples / variations interviewers like to ask
+
+Change to functional updates:
+
+setCount(prev => prev + 1);
+setCount(prev => prev + 1);
+
+
+→ UI shows 2.
+
+Calling setState inside setTimeout:
+If you do setTimeout(() => { setCount(count + 1) }, 0) twice, depending on environment non-batched updates may cause different behavior. (In older React versions, updates inside timeouts are not batched; in React 18+ they may be batched depending on mode.)
+
+Multiple different setCount values:
+
+setCount(count + 1);
+setCount(prev => prev + 1);
+
+
+Mixing styles is confusing — prefer functional updates when new state depends on previous state.
+
+Interview talking points / what to say aloud
+
+Explain closure capture: count inside handler is the value when handler started.
+
+Explain batching: React may batch updates in event handlers.
+
+Mention functional updater pattern setCount(prev => prev + 1) for correctness when new state depends on previous.
+
+Note React versions: batching semantics improved in React 18 — but regardless, prefer the functional updater for dependent updates.
+
+Quick practice mini-question (try to answer aloud)
+
+If count is 5, what will setCount(count - 2); setCount(prev => prev - 2); result in?
+(Answer: final count = 3 — first call computes 5 - 2 = 3, second call applies prev => prev - 2 to the resulting state 3, giving 1 only if functional updates are applied after synchronous set; but if both are batched and first was non-functional they may both be evaluated differently depending on React version. Safer to reason: always use functional updater to avoid ambiguity.)

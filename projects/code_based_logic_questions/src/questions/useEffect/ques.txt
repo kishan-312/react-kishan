@@ -1,0 +1,163 @@
+Perfect — Category 2: useEffect Dependency Logic
+30 Questions — Fast + Clear + Interview Style
+
+1) What does useEffect(() => {}, []) mean?
+
+Runs once after initial render. (ComponentDidMount)
+
+2) What does useEffect(() => {}) with no dependency array mean?
+
+Runs after every re-render.
+
+3) What does useEffect(() => {}, [count]) mean?
+
+Runs every time count changes.
+
+4) What happens here?
+useEffect(() => {
+  setCount(count + 1);
+}, []);
+
+
+Runs once and updates state → causes 1 re-render, but no infinite loop.
+
+5) What happens here?
+useEffect(() => {
+  setCount(count + 1);
+});
+
+
+Infinite re-render loop ❌ (because it runs after every render and updates state again).
+
+6) Which useEffect causes infinite loop?
+useEffect(() => setState(x+1), [x]); ❌
+
+
+Correct version:
+
+useEffect(() => setState(prev => prev+1), [x]);
+
+7) Why can dependency array not be omitted always?
+
+Because it controls when effect runs.
+
+8) Are objects/arrays stable values in dependencies?
+
+No — they cause re-renders unless memoized.
+
+9) How to fix repeated re-render due to array dependency?
+const list = useMemo(() => [1,2,3], []);
+useEffect(() => {...}, [list]);
+
+10) Empty dependency array means?
+
+Run only once.
+
+11) What does cleanup in useEffect do?
+
+Runs before effect re-runs or when component unmounts.
+
+12) Example cleanup:
+useEffect(() => {
+  const id = setInterval(fn, 1000);
+  return () => clearInterval(id);
+}, []);
+
+13) What happens if cleanup is missing?
+
+Memory leak / timers keep running.
+
+14) React guarantees effects run:
+
+After render is committed to DOM.
+
+15) Does useEffect run before first paint?
+
+No — after initial render.
+
+16) When does cleanup run?
+
+Before next effect & on unmount.
+
+17) Infinite loop example:
+useEffect(() => {
+  setVal(val + 1);
+}, [val]);
+
+18) Correct version to avoid stale state:
+setVal(prev => prev + 1);
+
+19) Why avoid async directly in useEffect callback?
+
+Because callback must return cleanup, async returns promise.
+
+Correct:
+
+useEffect(() => {
+  async function load() {...}
+  load();
+}, []);
+
+20) What if dependency is omitted by mistake?
+
+Effect may not re-run → stale UI.
+
+21) Should useEffect update state directly?
+
+Only if using functional updater when dependent on previous state.
+
+22) useEffect vs useLayoutEffect?
+
+useEffect: runs after paint
+
+useLayoutEffect: runs before paint (blocking)
+
+23) Is useEffect synchronous or asynchronous?
+
+useEffect callback runs asynchronously after paint.
+
+24) Dependency array compares values by?
+
+Reference equality.
+
+25) How to prevent infinite loop when fetching data?
+useEffect(() => {
+  fetchData();
+}, []);
+
+26) Why adding fetchData to dependency causes loop?
+
+Because function is re-created on each render.
+
+Fix:
+
+const fetchData = useCallback(() => {...}, []);
+
+27) How to run effect when multiple values change?
+useEffect(() => {...}, [a, b, c]);
+
+28) What happens if dependency is a function?
+
+Effect runs every render (function reference changes) unless wrapped in useCallback.
+
+29) How to run cleanup only once on unmount?
+useEffect(() => {
+  return () => {/* cleanup */}
+}, []);
+
+30) Summary Rule
+
+Always list all external values used inside useEffect in dependency array.
+If effect changes state based on previous state → use functional updater.
+
+class component extends React.component {
+
+
+    constructor(props) {
+        super(props)
+        this.state  = { count : 0 }
+
+    }
+}
+
+

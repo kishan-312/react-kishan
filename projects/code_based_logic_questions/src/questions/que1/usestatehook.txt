@@ -1,0 +1,245 @@
+Great question ✅
+Interviewers love to ask this.
+
+Where can you use useState?
+Location	Allowed?	Why
+At the top of a React function component	✅ Yes	React needs hook order to remain consistent
+Inside a custom hook (a function that starts with use)	✅ Yes	Custom hooks follow same rules as components
+Inside loops	❌ No	Hook order changes → React gets confused
+Inside conditions (if, else)	❌ No	Sometimes hook runs, sometimes not → breaks state order
+Inside nested functions	❌ No	Hook gets called unpredictably
+Inside class components	❌ No	Hooks only work in functional components
+✅ Correct Example (Allowed)
+function App() {
+  const [count, setCount] = useState(0); // ✅ Top level
+
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      {count}
+    </button>
+  );
+}
+
+❌ Wrong Example (Not Allowed)
+Inside a condition:
+function App() {
+  if (true) {
+    const [count, setCount] = useState(0); // ❌ Not allowed
+  }
+}
+
+Inside a loop:
+function App() {
+  for (let i = 0; i < 3; i++) {
+    const [value, setValue] = useState(i); // ❌ Not allowed
+  }
+}
+
+Inside another function:
+function App() {
+  function someWork() {
+    const [count, setCount] = useState(0); // ❌ Not allowed
+  }
+}
+
+✅ Allowed inside a custom hook
+function useCounter() {
+  const [count, setCount] = useState(0); // ✅ Allowed
+  return [count, setCount];
+}
+
+function App() {
+  const [count, setCount] = useCounter(); // ✅ Allowed
+  return <div>{count}</div>;
+}
+
+🔥 Why does React restrict this?
+
+Because React Hooks depend on the order in which they are called.
+
+React keeps a list like:
+
+Hook 1 -> useState
+Hook 2 -> useEffect
+Hook 3 -> useState
+
+
+If you put hooks inside if or loops, the order changes → React gets confused and breaks state.
+
+🧠 Shortcut Rule to Remember
+
+Hooks must be called at the top level of a React function component or a custom hook.
+
+Not inside conditions, loops, or nested functions.
+
+
+========================= order of hook ===============
+
+🧠 Order of Hooks Meaning
+React hooks must be called in the exact same order every time your component renders.
+React keeps an internal list like:
+Hook #1 -> useState(...)
+Hook #2 -> useEffect(...)
+Hook #3 -> useState(...)
+Hook #4 -> useRef(...)
+
+React does not track hooks by name
+React tracks hooks by position (order).
+So if order changes → React applies the wrong state/effect to the wrong hook → break.
+
+✅ Correct Example (Same order every render)
+function App() {
+  const [count, setCount] = useState(0);  // Hook #1
+  const [name, setName] = useState("Kishan"); // Hook #2
+
+  useEffect(() => {                        // Hook #3
+    console.log("Rendered");
+  }, []);
+
+  return <div>{count} - {name}</div>;
+}
+
+Hook Order Table
+Hook CallOrder PositionTypeuseState(0)#1stateuseState("Kishan")#2stateuseEffect()#3effect
+This is stable → React knows what to update.
+
+❌ Wrong Example (Breaking order)
+function App({ show }) {
+  const [count, setCount] = useState(0); // Hook #1
+
+  if (show) {
+    const [name, setName] = useState("Kishan"); // ❌ Hook order changes
+  }
+
+  useEffect(() => {                     // This may become Hook #2 or #3!
+    console.log("Rendered");
+  }, []);
+}
+
+Why this breaks?
+
+
+If show = true: useState("Kishan") is Hook #2
+
+
+If show = false: useEffect() becomes Hook #2
+
+
+So React gets confused like:
+Wait… last render Hook #2 was state, now it's effect? 😵
+
+
+🧩 Memory Trick
+✅ Allowed:
+
+
+Top-level of component
+
+
+Top-level of custom hook
+
+
+❌ Not Allowed:
+
+
+Inside if
+
+
+Inside loops
+
+
+Inside nested functions
+
+
+
+🎤 Interview Answer (Simple & Clean)
+
+Hooks must always be called in the same order because React identifies hook states by the order they appear in the component. If the order changes between renders, React can’t match the current hook call to its previous state, causing bugs. That’s why hooks must be called at the top-level and never inside loops, conditions, or nested functions.
+
+
+If you're ready, say:
+"Give me order-of-hooks question in code form"
+And I’ll send you a tricky interview code snippet + explanation 😎
+
+
+======================================== (loop conditions not allow, inside component body not allow)
+
+
+
+Great — let’s clear this very important interview topic:
+
+Where can you call setState (like setCount), and where can you NOT call it?
+
+✅ Where You CAN Call setState
+Place	Allowed?	Why
+Inside event handlers	✅ Yes	This is the most common use case
+Inside useEffect	✅ Yes	To update state after side effects
+Inside useCallback, useMemo callbacks	✅ Yes	Still controlled and stable
+Inside async functions / API calls	✅ Yes	Works fine
+Inside custom hooks	✅ Yes	Same rules as components
+✅ Example (Event Handler)
+function App() {
+  const [count, setCount] = useState(0);
+
+  function add() {
+    setCount(count + 1);
+  }
+
+  return <button onClick={add}>{count}</button>;
+}
+
+✅ Example (Inside useEffect)
+useEffect(() => {
+  setCount(prev => prev + 1);
+}, []);
+
+✅ Example (Inside async function)
+async function fetchData() {
+  const data = await fetch("/api");
+  setUser(data.user);
+}
+
+❌ Where You CANNOT Call setState
+Place	Not Allowed?	Reason
+Directly inside component body (top-level)	❌ Causes infinite re-render loop	
+Inside useMemo return	❌ Must remain pure	
+Inside useEffect cleanup	❌ Cleanup must be pure	
+Inside render logic (like mapping)	❌ It re-renders while rendering – infinite loop	
+Inside loops, conditions, or nested functions	⚠️ Allowed technically, but can break logic or cause infinite loops	
+❌ Example (Bad – causes infinite re-render)
+function App() {
+  const [count, setCount] = useState(0);
+
+  setCount(count + 1); // ❌ Runs every render → infinite loop
+
+  return <div>{count}</div>;
+}
+
+❌ Example (Bad – inside render mapping)
+items.map(item => {
+  setCount(prev => prev + 1); // ❌ Will update state while rendering
+});
+
+❌ Example (Bad – inside useEffect cleanup)
+useEffect(() => {
+  return () => {
+    setCount(5); // ❌ Not allowed in cleanup
+  };
+}, []);
+
+👍 Safe Summary to Speak in Interview
+
+You can call setState inside event handlers, effects, async callbacks, and custom hooks.
+You should NOT call it directly in the component body during render, inside cleanup functions, or anywhere that causes the state to update while rendering.
+Doing that leads to infinite re-renders.
+
+
+
+
+
+
+
+
+
+
+

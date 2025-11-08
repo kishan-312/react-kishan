@@ -15,11 +15,10 @@ const Pagination = ({ setCurrentPage, totalPages, currentPage }) => {
 
         {[...Array(totalPages)].map((_, i) => (
           <button
-            className={` btn ${
-              currentPage === i + 1
+            className={` btn ${currentPage === i + 1
                 ? "btn-secondary"
                 : "btn-light border border-1"
-            } `}
+              } `}
             onClick={() => setCurrentPage(i + 1)}
           >
             {i + 1}

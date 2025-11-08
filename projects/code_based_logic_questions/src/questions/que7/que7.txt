@@ -1,0 +1,71 @@
+✅ Category 1 — State Update & Re-render Logic
+
+
+// directly state update doesn't triggeer re-render
+Question 6
+
+Consider this code:
+
+function App() {
+  const [name, setName] = useState("Kishan");
+
+  function updateName() {
+    name = "Mistry";
+    console.log(name);
+  }
+
+  return (
+    <div>
+      <p>{name}</p>
+      <button onClick={updateName}>Change Name</button>
+    </div>
+  );
+}
+
+❓ When you click the button:
+
+What prints in the console?
+
+Does the UI update?
+
+Why?
+
+✅ Answer
+Part	Result
+Console Output	"Mistry"
+UI Display	Still shows: Kishan (UI does NOT update)
+Reason	Direct variable reassign does not trigger re-render
+🧠 Explanation
+Key Issue:
+
+You are not using setName to update state.
+
+This line:
+
+name = "Mistry";
+
+
+Only changes the local variable, not the React state.
+
+React does not know anything changed → no re-render.
+
+To update UI, you must call:
+
+setName("Mistry");
+
+
+React then triggers re-render and updates screen.
+
+✅ Correct Version:
+function updateName() {
+  setName("Mistry");
+}
+
+
+Now UI becomes:
+
+Mistry ✅
+
+🎯 Interview Key Statement (Say this confidently)
+
+Updating state variables directly does not trigger re-render because React tracks state only when setState / setX functions are used. State must be updated immutably through its setter function.

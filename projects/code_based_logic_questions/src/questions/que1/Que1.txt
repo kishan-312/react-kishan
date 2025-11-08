@@ -1,0 +1,261 @@
+Never call setState at the top level of the component body.
+
+Call it only inside:
+
+useEffect
+Event handlers (onClick, etc.)
+Callbacks
+Async operations
+
+if set at top level then to many re-renders show 
+
+======================= (infinite renders , first render answers 0 , continues re-render show 0,1,2,3,4,..., immediately not update )
+
+import React, { useState } from 'react'
+
+function Que1() {
+
+    const [count, setCount] = useState(0)
+    setCount(count + 1)
+    setCount(count + 1)
+    console.log(count);
+
+
+    return (
+        <>
+            <div>
+                <p>{"ghi"}</p>
+            </div>
+
+        </>
+    )
+}
+
+export default Que1
+
+---> initial render is zero then 0-1-2-3-4-5
+
+✅ Key Point
+
+console.log(count) prints the value of count in the current render
+NOT the updated value after setCount.
+
+React does not update state immediately.
+It schedules the update and applies it after the render finishes.
+
+So in your component:
+
+const [count, setCount] = useState(0)
+
+setCount(count + 1)
+setCount(count + 1)
+console.log(count)
+
+
+The initial render happens → count = 0
+
+You call setCount(1) and setCount(1)
+
+But state has not updated yet
+
+React finishes the render
+
+So console prints:
+
+0   ← (old value)
+
+✅ Then React Tries to Re-render
+
+After updates apply, React re-renders with count = 1:
+
+On 2nd render:
+
+setCount(1 + 1) → setCount(2)
+setCount(1 + 1) → setCount(2)
+console.log(count) // prints 1
+
+
+3rd render:
+
+count = 2
+console.log(count) // prints 2
+
+
+So the console outputs:
+
+0
+1
+2
+3
+4
+5
+...
+
+
+➡️ Because the component keeps re-rendering forever (infinite loop).
+
+✅ So Why Did I Say "Output is 0"?
+
+Because on the first render, console.log(count) prints 0.
+
+The first logged output is 0.
+Then it logs 1, 2, 3, 4, 5... because the component goes into infinite re-renders.
+
+So both things are true:
+
+Render	Printed Value
+1st	0 ✅
+2nd	1
+3rd	2
+4th	3
+...	continues forever
+⭐ Why Does It Keep Rendering?
+
+Because calling setCount inside the component body causes re-render, and the code runs again → calls setCount again → re-render → again → again → infinite.
+
+✅ Final Conclusion
+
+First console output is 0
+
+Then values increase endlessly because of infinite re-render loop
+
+=================================================================
+
+Ahh got it — you want the full React component for each question, and then we explain the output.
+
+So here is Question 1 in full component form with explanation.
+
+✅ Question 1: Full Component
+import React, { useState } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  setCount(count + 1);
+  setCount(count + 1);
+
+  console.log("Logged Value:", count);
+
+  return (
+    <div>
+      <h1>{count}</h1>
+    </div>
+  );
+}
+
+export default App;
+
+✅ Output in Console
+Logged Value: 0
+
+✅ Why?
+
+count starts at 0.
+
+setCount(count + 1) → sets value to 1, but does not update immediately.
+
+The second setCount(count + 1) again uses old value 0, so again tries to set it to 1.
+
+Both updates get batched together, so effectively:
+
+setCount(1)
+setCount(1)
+
+
+During this function render, count is still 0, so console prints:
+
+0
+
+
+React applies the update after the component finishes rendering.
+
+✅ Correct Way to Increment Twice
+setCount(prev => prev + 1);
+setCount(prev => prev + 1);
+
+
+This updates based on the latest value → final count becomes 2.
+
+======================================================== main reason value not update == (batches of update schedule, state update are asynchronus , so not in first render value update , second render value )
+
+Exactly ✅
+You understood it correctly.
+
+⭐ React state does NOT update immediately.
+
+setCount() does not change count instantly.
+It only schedules the update — React applies it after the render finishes.
+
+🔍 Why does React do this?
+
+Because React groups multiple state updates together (batching) to make the UI fast and efficient.
+
+Example:
+
+setCount(count + 1);
+setCount(count + 1);
+
+
+React sees both updates and optimizes them together, instead of updating the UI twice.
+
+💡 So:
+When console.log(count) runs	What value you get
+Immediately after setCount()	Old value (not updated yet)
+On the next render	Updated value
+✅ Simple Rule to Remember
+
+State updates are asynchronous.
+They do not update instantly.
+
+🧠 Example to lock this in your brain
+setCount(count + 1);
+console.log(count);
+
+
+This prints old count, not the new one.
+
+Because React says:
+
+"Wait… I’ll update later. Let me finish rendering first."
+
+If you want to see updated value right inside update, use:
+setCount(prev => {
+  console.log("Updated value:", prev + 1);
+  return prev + 1;
+});
+
+
+========================================
+
+React says:
+
+“Oh, two updates are happening at the same time — I will batch them.”
+
+Both calls use the same old count value (because React hasn’t updated it yet)
+
+===================== real difference between use old state vs use latest updated state ========================
+
+Why difference occurs?
+Code	Uses which value?	Result when multiple updates?
+setCount(count + 1)	Uses old state	Wrong when multiple updates (stays same)
+setCount(prev => prev + 1)	Uses latest updated state	Correct every time ✔
+
+
+✅ Uses old stale value
+✅ Batched updates happen
+❌ Does NOT use updated value during the same render
+
+
+✅ Still batched
+✅ Uses latest state (not stale)
+✅ Perfect for multiple updates
+
+
+
+
+
+
+
+
+
+

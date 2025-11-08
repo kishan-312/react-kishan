@@ -1,32 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit"; 
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 
-    currentIndex : 0 
+    currentIndex: 0
 
 }
 
 const sliderSlice = createSlice({
 
-    name : "slider",
+    name: "slider",
     initialState,
-    reducers : {
+    reducers: {
 
-        setCurrentIndex : (state,action) => {
+        setCurrentIndex: (state, action) => {
 
             state.currentIndex = action.payload
 
         },
-        nextSlide : (state,action) => {
+        nextSlide: (state, action) => {
 
 
             state.currentIndex = (state.currentIndex + 1) % action.payload
 
         },
-        prevSlide : (state,action) => {
+        prevSlide: (state, action) => {
 
 
-            state.currentIndex = (state.currentIndex - 1 + action.payload ) % action.payload
+            state.currentIndex = (state.currentIndex - 1 + action.payload) % action.payload
 
         },
 
@@ -35,5 +35,5 @@ const sliderSlice = createSlice({
 })
 
 
-export default sliderSlice.reducer 
-export const { setCurrentIndex, nextSlide,  prevSlide } = sliderSlice.actions
+export default sliderSlice.reducer
+export const { setCurrentIndex, nextSlide, prevSlide } = sliderSlice.actions
