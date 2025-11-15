@@ -1,0 +1,17 @@
+.accordion {
+
+    width: 600px !important;
+    margin: 200px auto !important;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.p {
+
+
+    background-color: antiquewhite;
+    padding: 20px !important;
+    width: 100% !important;
+
+}

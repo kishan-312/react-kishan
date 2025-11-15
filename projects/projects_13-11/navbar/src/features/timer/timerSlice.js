@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 
-    seconds: 0,
+    timer: 0,
     isRunning: false,
 
 }
@@ -13,13 +13,13 @@ const timerSlice = createSlice({
     initialState,
     reducers: {
 
-        setSeconds: (state, action) => {
+        setTimer: (state, action) => {
 
-            state.seconds = action.payload
+            state.timer = action.payload
 
         },
 
-        setRunningTimer: (state, action) => {
+        setRunning: (state, action) => {
 
             state.isRunning = action.payload
 
@@ -29,7 +29,7 @@ const timerSlice = createSlice({
 
 })
 
-
 export default timerSlice.reducer
-export const { setSeconds, setRunningTimer } = timerSlice.actions
+export const { setTimer, setRunning } = timerSlice.actions
+
 

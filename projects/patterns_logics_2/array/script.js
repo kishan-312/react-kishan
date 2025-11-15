@@ -57,8 +57,6 @@ function maximumElement(arr) {
 console.log(maximumElement([1, 2, 3, 4, 6, 9]));
 
 
-
-
 function minimumElement(arr) {
 
     let arr1 = arr;

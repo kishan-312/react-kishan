@@ -10,7 +10,7 @@ function DigitalClock() {
 
             setTime(new Date())
 
-        }, 100)
+        }, 1000)
 
         return () => clearInterval(timer)
 

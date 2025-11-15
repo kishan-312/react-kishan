@@ -21,6 +21,7 @@ function rightHalfPyramid(n) {
 }
 
 console.log(rightHalfPyramid(5));
+
 function rightHalfPyramidNoIncreasing(n) {
 
     let data = "";

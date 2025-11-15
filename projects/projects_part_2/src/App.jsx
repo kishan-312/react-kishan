@@ -15,11 +15,11 @@ function App() {
       {/* <Accordion /> */}
       {/* <Tabs /> */}
       {/* <Modal /> */}
-      {/* <Crud /> */}
+      <Crud />
       {/* <Crud_api /> */}
       {/* <Navbar /> */}
-      <Navbar />
-      <Outlet />
+      {/* <Navbar /> */}
+      {/* <Outlet /> */}
     </>
   )
 }

@@ -1,0 +1,102 @@
+.header {
+
+    background-color: beige;
+    width: 100%;
+    height: 90px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px !important;
+
+}
+
+.span {
+
+    color: brown;
+
+}
+
+.navActive {
+
+    color: rgb(74, 74, 243);
+
+}
+
+nav {
+
+    display: flex;
+    align-items: center;
+
+}
+
+.ul {
+
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+}
+
+.ul2 {
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: fixed;
+    top: 90px;
+    left: 0;
+    bottom: 0;
+    background-color: bisque;
+    align-items: center;
+    height: calc(100vh - 90px);
+    padding: 10px 20px !important;
+    width: max-content;
+    transform: translateX(-100%);
+    transition: transform 0.4s ease-in-out;
+
+}
+
+.menuClick {
+
+    transform: translateX(0%);
+
+
+}
+
+.a {
+
+
+    cursor: pointer !important;
+
+}
+
+.menu {
+
+    display: none;
+    font-size: 20px;
+    cursor: pointer;
+
+}
+
+@media (max-width : 576px) {
+
+    .menu {
+
+        display: block !important;
+
+    }
+
+    .ul {
+
+        display: none !important;
+
+
+    }
+
+
+}
