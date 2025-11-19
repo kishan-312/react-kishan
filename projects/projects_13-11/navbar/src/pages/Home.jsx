@@ -4,7 +4,7 @@ import Crud from '../components/Crud'
 function Home() {
     return (
         <>
-            <Crud />
+            <Crud  />
 
         </>
     )

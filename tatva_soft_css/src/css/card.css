@@ -1,0 +1,28 @@
+.card {
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    padding: 20px;
+    border-right: 1px solid black;
+
+}
+
+
+
+.card-data {
+
+    color: rgb(136, 136, 238);
+    font-size: 30px;
+
+}
+
+.border-b {
+
+    padding: 40px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
