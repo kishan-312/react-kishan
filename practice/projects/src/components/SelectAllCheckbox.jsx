@@ -65,7 +65,7 @@ function SelectAllCheckbox() {
                     </div>)
                 }
             </div>
-            <p>Selected Items : { } </p>
+            <p>Selected Items : {  } </p>
 
         </>
     )

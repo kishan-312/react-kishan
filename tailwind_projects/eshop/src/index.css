@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+@layer components {
+
+  .container {
+
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+  }
+
+  @media (min-width : 576px) {
+
+      .container {
+      
+          padding-left: 3rem;
+          padding-right: 3rem;
+      
+        }
+
+  }
+
+}
+
+@theme {
+
+  --color-primary : #fea928 ;
+  --color-secondary : #ed8900;
+
+}
+
+
+
+
+
