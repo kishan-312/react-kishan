@@ -28,19 +28,19 @@ const router = createBrowserRouter([
       },
       {
 
-        path : "/top_rated",
+        path : "/top-rated",
         element : <Top_Rated/>
 
       },
       {
 
-        path : "/kids_wear",
+        path : "/kids-wear",
         element : <Kids_Wear/>
 
       },
       {
 
-        path : "/mens_wear",
+        path : "/mens-wear",
         element : <Mens_wear/>
 
       },
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
       },
       {
 
-        path : "/trending_items",
+        path : "/trending-items",
         element : <Trending_items/>
 
       },
