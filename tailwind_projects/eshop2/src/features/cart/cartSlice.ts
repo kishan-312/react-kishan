@@ -29,7 +29,7 @@ const cartSlice = createSlice({
 
         addData : (state,action :  PayloadAction<CartItem> ) => {
 
-            state.cart = action.payload
+            state.cart = [...state.cart , action.payload ]
 
         }
 
